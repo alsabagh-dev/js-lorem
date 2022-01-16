@@ -156,6 +156,13 @@ p {
   background: var(--clr-primary-8);
   border-color: var(--clr-primary-8);
 }
+
+.btn:disabled {
+  cursor: not-allowed;
+  color: var(--clr-primary-5);
+  background: var(--clr-primary-8);
+  border-color: var(--clr-primary-8);
+}
 /* section */
 .section {
   padding: 5rem 0;
