@@ -15,13 +15,14 @@ I just told you! You've killed me! Fry! Quit doing the right thing, you jerk! Mi
 const form = document.querySelector('.lorem-form');
 const amount = document.getElementById('amount');
 const result = document.querySelector('.lorem-text');
+const copy_btn = document.querySelector('.copy');
 
 const get_random = (arr) => Math.floor(Math.random() * arr.length);
 
 const generate_lorem = (elemnt, p_num) => {
   const add_p = (p) => elemnt.innerHTML += `<p class='result'>${p}</p>`;
   elemnt.innerHTML = ``;
-  
+
   if(p_num === 1){
     const p = text[get_random(text)];
     add_p(p);
@@ -37,7 +38,7 @@ form.addEventListener('submit', (event) => {
   // prevent the form from submitting to server
   event.preventDefault();
   const value = (amount.value === '')? +amount.placeholder : +amount.value;
-  
+  copy_btn.disabled = false;
   if(isNaN(value)){
     alert('invalid input: amount must be a number');
   }else if(value > 9 || value < 1){
@@ -46,3 +47,21 @@ form.addEventListener('submit', (event) => {
     generate_lorem(result, value);
   }
 });
+
+copy_btn.addEventListener('click', () => {
+  let value = ``;
+  const paragraphs = result.querySelectorAll('p');
+  if(paragraphs.length === 0) {
+    copy_btn.disabled = true;
+  }else{
+    paragraphs.forEach( p => value += (p.textContent+'\n'));  
+  }
+  navigator.clipboard.writeText(value);
+  copy_btn.innerHTML = "Copied!";
+});
+
+copy_btn.addEventListener('mouseout', function(){
+  setTimeout(() => {
+    copy_btn.innerHTML = 'copy';
+  }, 300);
+})
