@@ -11,3 +11,38 @@ I just told you! You've killed me! Fry! Quit doing the right thing, you jerk! Mi
   `Man braid celiac synth freegan readymade, pitchfork fam salvia waistcoat lomo bitters gentrify four loko. Pitchfork semiotics post-ironic vegan. Tofu meditation microdosing hashtag semiotics venmo. Flexitarian vape tilde taiyaki. Prism poutine farm-to-table, messenger bag vegan taxidermy tattooed sartorial squid jean shorts fixie selvage trust fund vape.`,
   `Rutters Plate Fleet boom chandler Brethren of the Coast handsomely lookout marooned brigantine knave. Buccaneer gangway jack rum loot spyglass line Jack Tar fore gaff. Gaff topmast scuttle ballast swab draught measured fer yer chains dance the hempen jig Chain Shot yardarm.`,
 ];
+
+const form = document.querySelector('.lorem-form');
+const amount = document.getElementById('amount');
+const result = document.querySelector('.lorem-text');
+
+const get_random = (arr) => Math.floor(Math.random() * arr.length);
+
+const generate_lorem = (elemnt, p_num) => {
+  const add_p = (p) => elemnt.innerHTML += `<p class='result'>${p}</p>`;
+  elemnt.innerHTML = ``;
+  
+  if(p_num === 1){
+    const p = text[get_random(text)];
+    add_p(p);
+  }else{
+    const lorem = text.slice(0,p_num);
+    lorem.forEach((p) => {
+      add_p(p);
+    });
+  }
+}
+
+form.addEventListener('submit', (event) => {
+  // prevent the form from submitting to server
+  event.preventDefault();
+  const value = (amount.value === '')? +amount.placeholder : +amount.value;
+  
+  if(isNaN(value)){
+    alert('invalid input: amount must be a number');
+  }else if(value > 9 || value < 1){
+    generate_lorem(result, 1);
+  }else{
+    generate_lorem(result, value);
+  }
+});
